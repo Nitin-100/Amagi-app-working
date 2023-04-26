@@ -1,7 +1,6 @@
 import asyncio
 import aiohttp
-import json
-
+from aiohttp import ClientTimeout
 async def send_request(session, url, resolution, image_path, chunk_duration):
     data = {
         'youtube_url': url,
@@ -10,7 +9,7 @@ async def send_request(session, url, resolution, image_path, chunk_duration):
         'chunk_duration': chunk_duration,
     }
 
-    async with session.post('http://localhost:5000/process_singlethreaded', json=data) as response:
+    async with session.post('http://localhost:5000/process_request_multiprocess_endpoint', json=data) as response:
         print(await response.text())
 
 async def main():
@@ -25,8 +24,8 @@ async def main():
     image_path = 'C:\\Users\\nchaudhary\\Desktop\\Amagi-YT-FFMPEG\\overlay.png'
     chunk_duration = 10
 
-
-    async with aiohttp.ClientSession() as session:
+    timeout = ClientTimeout(total=10 * 80)  # Set the timeout to 10 minutes
+    async with aiohttp.ClientSession(timeout=timeout) as session:
         tasks = []
         for url in youtube_urls:
             task = asyncio.ensure_future(send_request(session, url, resolution, image_path, chunk_duration))
