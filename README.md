@@ -1,4 +1,25 @@
-# Amagi-app-working
+Problem Statement:
+Design and develop Overlay stitching pipeline with FFMPEG and Gstreamer, which will break
+the problem into smaller chunks to overall reduce the time of Stitching an overlay ad.
+Let’s assume if a 20 second video to stitch an overlay for entire 20 second takes 6 seconds, we
+want to parallelize the transcoding activity into 6 or more transcoder which can break the video
+into smaller chunks and stitch individually and than later Merge the stitched video back to 20
+second Video.
+Overall the goal is to parallelize the transcoding required for Overlay ad stitching by breaking
+the larger video into smaller chunks and reducing the time required.
+
+Develop this for any 720p and or 1080p video from youtube. The overlay creative can be
+picked up from anywhere on the internet. Maintain the height of overlay to be 96p.
+Make the solution available as an API.
+Develop an Python REST API, that will take youtube URL or any other URL as input along with
+locally available Overlay creative on the system. Video should be 1080p or 720 P and minimum
+20 second worth of video.
+The output/response of api can be an HLS stream - URL from GSTreamer or FFMPEG, which
+can be directly opened in a browser.
+
+
+
+How TO Run ?
 Run app.py 
 and run testing.py to test app
 
